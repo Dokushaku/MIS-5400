@@ -31,11 +31,14 @@ def get_random_pages(pages=0):
             pass
     return ret
 
+for i in range (1000000):
+    try:
+        my_list = get_random_pages(1)
+        f = open("FrenchCorpus.txt", 'a+', encoding='utf-8')
+        with f:
+            for item in my_list:
+                f.write("%s\n" % item)
+        f.close()
+    except:
+            pass
 
-my_list = get_random_pages(1000)
-f = open("FrenchCorpus.txt", 'a+', encoding='utf-8')
-
-with f:
-    for item in my_list:
-        f.write("%s\n" % item)
-f.close()
