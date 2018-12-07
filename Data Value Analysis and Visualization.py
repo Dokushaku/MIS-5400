@@ -12,13 +12,24 @@ cl= MongoClient('mongodb://supchanda08kol50:Password44@ds050087.mlab.com:50087/a
 mis_db= cl.azuredatabase
 bigramDict=dict()
 trigramDict=dict()
+mostFreqWordList=dict()
 count=0
 col_List = mis_db.list_collection_names()
 def funcJSON(NameOfItems,count):
+    mostFreqWord=NameOfItems[0]
     k=0
+    mostFreqWordList[k]=(mostFreqWord)
     bigramDict[k]=list(nltk.bigrams(NameOfItems))
     col_List = mis_db.list_collection_names()
     
+    for key,value in mostFreqWordList.items():
+        JSONDictForMongo = [
+            {'Most Frequent Word in Sentence No: ' + str(count)  : value }
+        ]
+        bi_Name= 'Most Frequent Word in Sentence No: ' + str(count) 
+        if bi_Name not in col_List:
+            collectionCreated = mis_db.create_collection('Most Frequent Word in Sentence No: ' + str(count))
+            collectionCreated.insert_many(JSONDictForMongo)
     #print(bigramDict)
     for key,value in bigramDict.items():
         #print(key)
@@ -36,8 +47,8 @@ def funcJSON(NameOfItems,count):
     for key,value in trigramDict.items():
         #print(key)
         JSONDictForMongo = [
-            {'TrigramCollection: ' + str(count): value } 
-        ] 
+            {'TrigramCollection: ' + str(count): value }
+        ]
         print(type(JSONDictForMongo),JSONDictForMongo)
         #print(dictTostr)
         tri_Name='Trigram Collection No:' + str(count)
@@ -73,7 +84,7 @@ with open('C:\\Users\\supratik chanda\\Downloads\\RawFrenchCorpus001.txt', 'r',e
                 plt.xlabel('ItemNames')
                 plt.ylabel('itemCountInASentence' )
                 plt.title('First 5 words with highest frequency in a sentence',fontsize=20)
-                #plt.show()
+                #plt.show() 
                 plt.pie(x=itemCountInASentence,autopct='%.0f',wedgeprops={'edgecolor':'black','linewidth':1})
                 circle = plt.Circle((0,0),0.75,fc='white',color='black',linewidth=1)
                 k= plt.gcf()
