@@ -37,7 +37,7 @@ def funcJSON(NameOfItems,count):
         #print(key)
         JSONDictForMongo = [
             {'TrigramCollection: ' + str(count): value } 
-        ]
+        ] 
         print(type(JSONDictForMongo),JSONDictForMongo)
         #print(dictTostr)
         tri_Name='Trigram Collection No:' + str(count)
